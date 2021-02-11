@@ -22,13 +22,7 @@ export default function App() {
   }
   return (
     <View style={styles.container0}>
-      <Button
-        onPress={() => {
-          alert('You tapped the button!');
-        }}
-        title="Press Me"
-      />
-
+      
       <Text>已經按了{count}次</Text>
       {/* 計數器+1 */}
       <TouchableOpacity style={styles.containerOpacity} onPress={() => setCount(count + 1)}>
