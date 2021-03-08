@@ -3,26 +3,30 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, Button, View, TouchableOpacity, Image } from 'react-native';
 
 export default function App() {
-
-
   const [count, setCount] = useState(0)
+  const [countColor, setCountColor] = useState(2)
+  const [countPicture, setCountPicture] = useState(2)
 
-  // 以下的countColor變數是為了指定給container使用的
-  const [countColor, setCountColor] = useState(3)
-  //  原來希望做三種container
-  //  container0, container1, container2 一樣用count+1的方式每按一次"頁面變色" countColor就+1，再用3去除，
-  // 所得的餘數應為0,1,2三種數,將餘數帶入到containerX的尾數中以實現每點選一次就循環變換，但是沒有做成功，
-  // 請問老師，這裡要怎麼實現呢？
-  // 另外再請問，如果我只想要將一個變數插入到像:<View style={styles.container0}> 左方的0的部份，我的
-  // 外層包覆的符號應該要怎麼寫呢?這裡的規則我一直沒有搞懂。
-
+  // 宣告更換圖片的三張圖片矩陣
+  const images = {
+    image0: require('./src/image/0.png'),
+    image1: require('./src/image/1.png'),
+    image2: require('./src/image/2.png')
+  }
 
   const printOpacity = () => {
-    console.log(count)
+    console.log('按到頁面變色按鈕了')
+    setCountColor((countColor + 1) % 3)
+    console.log(countColor)
+  }
+  const printOpacity1 = () => {
+    console.log('按到更換圖片按鈕了')
+    setCountPicture((countPicture + 1) % 3)
+    console.log(countPicture)
+
   }
   return (
-    <View style={styles.container0}>
-      
+    <View style={styles[`container${countColor}`]}>
       <Text>已經按了{count}次</Text>
       {/* 計數器+1 */}
       <TouchableOpacity style={styles.containerOpacity} onPress={() => setCount(count + 1)}>
@@ -41,7 +45,7 @@ export default function App() {
       </TouchableOpacity>
 
       {/* 頁面變色 */}
-      <TouchableOpacity style={styles.containerOpacity} onPress={() => setCountColor(countColor + 1)}>
+      <TouchableOpacity style={styles.containerOpacity} onPress={() => printOpacity()}>
         <Image
           style={{ width: 250, height: 53 }}
           source={require('./src/image/003.png')}
@@ -49,7 +53,7 @@ export default function App() {
       </TouchableOpacity>
 
       {/* 頁面換圖 */}
-      <TouchableOpacity style={styles.containerOpacity} onPress={() => printOpacity()}>
+      <TouchableOpacity style={styles.containerOpacity} onPress={() => printOpacity1()}>
         <Image
           style={{ width: 250, height: 53 }}
           source={require('./src/image/004.png')}
@@ -57,6 +61,14 @@ export default function App() {
         {/* <Text>按一下 TouchableOpacity</Text> */}
       </TouchableOpacity>
       <StatusBar style="auto" />
+      <Text>{countPicture}</Text>
+      <Image
+        style={{ width: 150, height: 213 }}
+        // source={require('./src/image/1.png')}
+        source={images["image" + countPicture.toString()]}
+      />
+      {/* countPicture */}
+
     </View >
   );
 }
